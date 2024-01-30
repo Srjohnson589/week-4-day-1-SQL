@@ -69,8 +69,36 @@ WHERE store_id = 1 AND last_name LIKE '%es';
 -- 9. How many payment amounts (4.99, 5.99, etc.) had a number of rentals above 250 for customers
 -- with ids between 380 and 430? (use group by and having > 250)
 
+SELECT COUNT(amount), amount
+FROM payment
+WHERE customer_id BETWEEN 380 AND 430
+GROUP BY amount
+ORDER BY COUNT(amount) DESC;
 
+-- I see that for customers between ids 380 and 430 
+--there are 269 payments of 0.99, 281 payments of 4.99
+-- and 290 payments of 2.99
+
+--This would use the > 250.... and give me true/false for the amount over 250 - but I could not
+--think of another way to use > 250
+
+SELECT COUNT(amount) > 250, amount
+FROM payment
+WHERE customer_id BETWEEN 380 AND 430
+GROUP BY amount
+ORDER BY COUNT(amount) DESC;
 
 -- 10. Within the film table, how many rating categories are there? And what rating has the most
 -- movies total?
 
+SELECT DISTINCT rating
+FROM film;
+
+-- There are 5 rating categories from G to NC-17
+
+SELECT rating, COUNT(film_id)
+FROM film
+GROUP BY rating
+ORDER BY COUNT(film_id) DESC;
+
+-- The category with the most movies is PG-13 with 223 movies
